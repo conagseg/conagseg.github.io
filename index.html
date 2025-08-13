@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>진짜찐짜 카드깡 — 포켓몬 카드 팩 오픈 시뮬레이터</title>
+  <meta name="description" content="불법 금융행위와 무관한 팬메이드 포켓몬 카드 팩 오픈 시뮬레이터 — 오늘의 카드 횟수 슬롯과 재치있는 인터랙션" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind custom config (optional)
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          boxShadow: {
+            'glow-c': '0 0 0 2px rgba(209,213,219,0.6), 0 6px 18px rgba(0,0,0,0.08)',
+            'glow-u': '0 0 0 2px rgba(125,211,252,0.6), 0 6px 18px rgba(0,0,0,0.12)',
+            'glow-r': '0 0 0 2px rgba(252,211,77,0.7), 0 6px 20px rgba(0,0,0,0.16)',
+            'glow-sr':'0 0 0 2px rgba(196,181,253,0.7), 0 8px 24px rgba(0,0,0,0.2)',
+            'glow-ur':'0 0 0 2px rgba(249,168,212,0.8), 0 10px 28px rgba(0,0,0,0.24)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="min-h-screen bg-gradient-to-b from-amber-50 to-white dark:from-zinc-900 dark:to-zinc-950 text-zinc-900 dark:text-zinc-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/70 dark:bg-zinc-900/70 border-b border-zinc-200 dark:border-zinc-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-xl">✨</span>
+        <h1 class="font-extrabold text-xl sm:text-2xl">진짜찐짜 카드깡</h1>
+        <span class="text-xs bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded px-2 py-1">포켓몬 카드 팩 오픈 시뮬레이터</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" class="px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800" aria-label="테마 전환">라이트/다크</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notice -->
+  <section class="max-w-6xl mx-auto px-4 mt-4">
+    <div class="border border-amber-300 dark:border-amber-500 rounded-xl p-3 flex gap-3 items-start bg-amber-50/40 dark:bg-amber-950/20">
+      <span class="text-amber-600 dark:text-amber-300">⚠️</span>
+      <p class="text-sm leading-relaxed">
+        이 사이트는 <b>불법 금융행위(일명 ‘카드깡’)</b>과 전혀 관련이 없는 <b>팬메이드 게임</b>입니다. 실제 결제/현금화 기능은 제공하지 않으며,
+        포켓몬 카드 팩을 <b>가상으로 오픈</b>하는 재미만 제공합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="max-w-6xl mx-auto px-4 mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <div class="font-semibold text-sm mb-1 flex items-center gap-2"><span>☕</span>오늘의 카드 횟수</div>
+      <div class="text-3xl font-extrabold tabular-nums"><span id="todayCount">0</span><span class="text-base font-medium ml-1">장</span></div>
+      <p class="text-xs text-zinc-500 mt-1">※ 기존 “오늘의 커피슬롯”을 <b>오늘의 카드 횟수</b>로 치환</p>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <div class="font-semibold text-sm mb-1">누적 오픈</div>
+      <div class="text-3xl font-extrabold tabular-nums"><span id="totalCount">0</span><span class="text-base font-medium ml-1">장</span></div>
+      <div class="mt-2">
+        <div class="w-full h-2 rounded bg-zinc-200 dark:bg-zinc-800">
+          <div id="progressBar" class="h-2 rounded bg-amber-400" style="width: 0%"></div>
+        </div>
+        <p class="text-xs text-zinc-500 mt-1">다음 100장까지 <span id="toNext">100</span>장</p>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <div class="font-semibold text-sm mb-1">오늘의 운세 게이지</div>
+      <div class="flex items-center gap-2">
+        <span>⭐</span>
+        <div class="w-full h-2 rounded bg-zinc-200 dark:bg-zinc-800">
+          <div id="luckBar" class="h-2 rounded bg-emerald-400" style="width: 0%"></div>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-500 mt-1">팩에서 높은 레어가 나올수록 상승</p>
+    </div>
+  </section>
+
+  <!-- Slot + Pack -->
+  <section class="max-w-6xl mx-auto px-4 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <div class="font-semibold text-base mb-3 flex items-center gap-2">🎰 오늘의 카드 슬롯</div>
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="slot-cell"><span id="reel1">C</span></div>
+        <div class="slot-cell"><span id="reel2">C</span></div>
+        <div class="slot-cell"><span id="reel3">C</span></div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="spinBtn" class="btn-primary">스핀</button>
+        <button id="openBtn" class="btn-secondary">팩 오픈(10장)</button>
+        <button id="resetBtn" class="btn-ghost">오늘 카운트 초기화</button>
+      </div>
+      <p class="text-xs text-zinc-500 mt-3">스핀은 연출용이며, 팩 오픈 시 <b>오늘의 카드 횟수</b>가 10장 증가합니다.</p>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <div class="font-semibold text-base mb-3 flex items-center gap-2">✨ 최근 오픈 결과</div>
+      <div id="packGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"></div>
+      <div id="emptyHint" class="text-sm text-zinc-500">아직 오픈한 팩이 없습니다. 스핀 후 <b>팩 오픈</b>을 눌러보세요!</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="max-w-6xl mx-auto px-4 mt-10 mb-16">
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 p-4">
+      <p class="font-semibold mb-1 text-sm">커스터마이징 가이드</p>
+      <ul class="list-disc pl-5 text-sm space-y-1">
+        <li><b>브랜딩:</b> 상단 제목/배지 문구 수정</li>
+        <li><b>카드 풀:</b> <code>POKEMON</code> 배열을 JSON으로 교체 가능</li>
+        <li><b>레어도 확률:</b> <code>RARITIES.weight</code> 조정</li>
+        <li><b>이미지 변경:</b> <code>images/</code> 폴더의 PNG를 교체하거나 <code>IMAGE_MAP</code>을 수정</li>
+        <li><b>법적 고지:</b> 상단 경고 카드 유지(실제 결제/현금화 기능 금지)</li>
+      </ul>
+    </div>
+  </section>
+
+  <script src="./app.js"></script>
+</body>
+</html>
