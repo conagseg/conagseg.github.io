@@ -69,13 +69,13 @@ function attachImgWithFallback(img, id, alt) {
 }
 
 // --- Rarity (with exact probabilities) --------------------------------------
-// Requested: common 75%, one 10%, two 2%, emulsive 0.222%, gold 0.040%.
+// Requested: common 75%, one 10%, two 2%, immersive 0.222%, gold 0.040%.
 // The unspecified remainder 12.738% is folded into 'common' => 87.738% total for common.
 const RARITIES = [
   { key: "common", name: "common",   pct: 75.0 + 12.738, cls: "rar-c", score: 0 },
   { key: "one",    name: "one star", pct: 10.0,          cls: "rar-1", score: 1 },
   { key: "two",    name: "two star", pct: 2.0,           cls: "rar-2", score: 3 },
-  { key: "emul",   name: "emulsive", pct: 0.222,         cls: "rar-e", score: 7 },
+  { key: "emul",   name: "immersive", pct: 0.222,         cls: "rar-e", score: 7 },
   { key: "gold",   name: "gold card",pct: 0.040,         cls: "rar-g", score: 12 },
 ];
 
