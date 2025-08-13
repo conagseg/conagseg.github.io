@@ -14,8 +14,8 @@ function todayKey() {
 
 // --- Gen2 Pokémon (subset) ---------------------------------------------------
 const P = [
-  { id: 249, name: "루기아 (Lugia)", tier: "legend" },
-  { id: 250, name: "칠색조 (Ho-Oh)", tier: "legend" },
+  { id: 249, name: "Lugia", tier: "legend" },
+  { id: 250, name: "Ho-Oh", tier: "legend" },
   { id: 243, name: "Raikou", tier: "legend" },
   { id: 244, name: "Entei", tier: "legend" },
   { id: 245, name: "Suicune", tier: "legend" },
@@ -68,15 +68,12 @@ function attachImgWithFallback(img, id, alt) {
   };
 }
 
-// --- Rarity (with exact probabilities) --------------------------------------
-// Requested: common 75%, one 10%, two 2%, immersive 0.222%, gold 0.040%.
-// The unspecified remainder 12.738% is folded into 'common' => 87.738% total for common.
 const RARITIES = [
-  { key: "common", name: "common",   pct: 75.0 + 12.738, cls: "rar-c", score: 0 },
+  { key: "common", name: "common",   pct: 87.738, cls: "rar-c", score: 0 },
   { key: "one",    name: "one star", pct: 10.0,          cls: "rar-1", score: 1 },
   { key: "two",    name: "two star", pct: 2.0,           cls: "rar-2", score: 3 },
   { key: "emul",   name: "immersive", pct: 0.222,         cls: "rar-e", score: 7 },
-  { key: "gold",   name: "gold card",pct: 0.040,         cls: "rar-g", score: 12 },
+  { key: "gold",   name: "gold card", pct: 0.040,         cls: "rar-g", score: 12 },
 ];
 
 // Pools per rarity (importance → rarity)
